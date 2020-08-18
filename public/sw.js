@@ -1,9 +1,4 @@
-1- create file in public "sw.js"
-
-paste code
-
-"
-    var cacheName='demp-app'
+var cacheName='demp-app'
 var fileToCashe=[
     'index.html',
     '/',
@@ -35,40 +30,9 @@ self.addEventListener("fetch",function(e){
             caches.match(e.request)
             .then(function(response){
                 return response || fetch(e.request)
-
+                let responseUrl=e.request.clone();
+                return fetch(responseUrl)
             })
         )
     }
 })
-"
-
-2- create file in src "swDev.js"
-
-paste code
-
-"
-    import React from 'react'
-
-export const swDev = () => {
-  let url=`${process.env.PUBLIC_URL}/sw.js`
-navigator.serviceWorker.register(url).then((result)=>{
-  console.log("result",result)
-})
-  return (
-    <div>
-
-    </div>
-  )
-}
-
-"
-
-3- clean "service worker" default file
-
-4- install serve
- // npm i serve
-
- 5- install build
-
- 6- run serve
-// serve -s build
