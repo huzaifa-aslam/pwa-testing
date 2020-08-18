@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
+    <meta name="description" content="Web site created using create-react-app" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -25,8 +23,9 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
-  </head>
-  <body>
+</head>
+
+<body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--
@@ -39,5 +38,46 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-  </body>
+</body>
+<script>
+    'use strict';
+
+    let deferredInstallPrompt = null;
+
+    // window.addEventListener('beforeinstallprompt', saveBeforeInstallPromptEvent);
+
+    // function saveBeforeInstallPromptEvent(evt) {
+    //     deferredInstallPrompt = evt;
+    //     installButton.removeAttribute('hidden');
+    // }
+
+    window.addEventListener('butInstall', installPWA);
+
+    function installPWA(evt) {
+        // CODELAB: Add code show install prompt & hide the install button.
+        deferredInstallPrompt.prompt();
+        // Hide the install button, it can't be called twice.
+        evt.srcElement.setAttribute('hidden', true);
+
+        // CODELAB: Log user response to prompt.
+        deferredInstallPrompt.userChoice
+            .then((choice) => {
+                if (choice.outcome === 'accepted') {
+                    console.log('User accepted the A2HS prompt', choice);
+                } else {
+                    console.log('User dismissed the A2HS prompt', choice);
+                }
+                deferredInstallPrompt = null;
+            })
+    }
+
+    // CODELAB: Add event listener for appinstalled event
+    window.addEventListener('appinstalled', logAppInstalled);
+
+    function logAppInstalled(evt) {
+        // CODELAB: Add code to log the event
+        console.log('Weather App was installed.', evt);
+    }
+</script>
+
 </html>
